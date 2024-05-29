@@ -3,9 +3,12 @@ package models;
 import Actions.Drawable;
 import Actions.MovableX;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.awt.*;
 
+@Service ("hero")
 public class Hero extends Role implements Drawable, MovableX {
     int[] XPoints = {400,450,350};
 
@@ -73,4 +76,16 @@ public class Hero extends Role implements Drawable, MovableX {
             setCoordX(XPoints);
         }
     }
+
+    // Método para obtener la coordenada X desde donde disparar
+    public int getX() {
+        return XPoints[0]; // Retorna la coordenada X del vértice superior
+    }
+
+    // Método para obtener la coordenada Y desde donde disparar
+    public int getY() {
+        return YPoints[0]; // Retorna la coordenada Y del vértice superior
+    }
+
+
 }

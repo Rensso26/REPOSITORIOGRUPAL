@@ -70,4 +70,9 @@ public class Enemy extends Role implements Drawable, MovableY {
 
     }
 
+    @Override
+    public void speed(int speed) {
+
+    }
+
 }

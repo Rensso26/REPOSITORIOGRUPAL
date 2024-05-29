@@ -1,5 +1,6 @@
 package Controlers;
 
+import models.Bullets;
 import models.Enemy;
 import models.Hero;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +16,29 @@ public class Container {
     final int SCREEN_HEIGHT = 200;
 
     List <Enemy> enemyList = new ArrayList();
+    List <Bullets> bulletsHeroList = new ArrayList();
     Random random = new Random();
-    @Autowired
+
     Hero hero = new Hero();
+
+    Bullets bullet;
 
 
 
     public Container(){
-        enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH),random.nextInt(SCREEN_HEIGHT),5,10));
-        enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH),random.nextInt(SCREEN_HEIGHT),5,10));
-        enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH),random.nextInt(SCREEN_HEIGHT),5,10));
-        enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH),random.nextInt(SCREEN_HEIGHT),5,10));
-        enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH),random.nextInt(SCREEN_HEIGHT),5,10));
+        for (int i = 0; i < 5; i++) {
+            enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT), 5, 10));
+        }
 
     }
 
     public void draw(Graphics g){
         this.hero.draw(g);
-        for(int i = 0; i < enemyList.size(); i++) {
-            enemyList.get(i).draw(g);
+        for (Enemy enemy : enemyList) {
+            enemy.draw(g);
+        }
+        for (Bullets bullet : bulletsHeroList) {
+            bullet.draw(g);
         }
 
     }
@@ -47,9 +52,14 @@ public class Container {
     }
 
     public void moveDown(int distance) {
-        for(int i = 0; i < enemyList.size(); i++) {
-            enemyList.get(i).moveDown(distance);
+        for (Enemy enemy : enemyList) {
+            enemy.moveDown(distance);
         }
+    }
+    public void shootHeroBullet() {
+        Bullets newBullet = new Bullets(hero.getX(), hero.getY());
+        bulletsHeroList.add(newBullet);
+
     }
 }
 

@@ -24,7 +24,7 @@ public class BackGround extends JFrame implements KeyListener {
         panel.setBackground(Color.black);
         setContentPane(panel);
         addKeyListener(this);
-        Timer timer = new Timer(100, new ActionListener() {
+        Timer timer = new Timer(500, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +62,10 @@ public class BackGround extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_D : {
                 container.moveRight(10);
+                break;
+            }
+            case KeyEvent.VK_SPACE : {
+                container.shootHeroBullet();
                 break;
             }
             default:
