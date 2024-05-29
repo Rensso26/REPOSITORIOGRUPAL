@@ -22,9 +22,6 @@ public class Container {
 
     Hero hero = new Hero();
 
-    Bullets bullet;
-
-
 
     public Container(){
         for (int i = 0; i < 5; i++) {
@@ -62,15 +59,16 @@ public class Container {
         bulletsHeroList.add(newBullet);
 
     }
-    public void moveBullets() {
+    public void moveBullets(){
         Iterator<Bullets> iterator = bulletsHeroList.iterator();
-        while (iterator.hasNext()) {
-            Bullets bullet = iterator.next();
-            bullet.moveUp(1);
-            if (bullet.getY() < 0) {
-                iterator.remove(); // Remueve la bala si está fuera de la pantalla
+        while (iterator.hasNext()){
+            Bullets bullets = iterator.next();
+            bullets.moveUp(2);
+            if (bullets.getY()<0){
+                iterator.remove();
             }
         }
     }
+
 }
 

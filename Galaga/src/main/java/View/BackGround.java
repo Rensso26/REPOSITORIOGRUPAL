@@ -24,25 +24,28 @@ public class BackGround extends JFrame implements KeyListener {
         panel.setBackground(Color.black);
         setContentPane(panel);
         addKeyListener(this);
-        Timer timer = new Timer(500, new ActionListener() {
+        Timer timer = new Timer(100, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                container.moveDown(1);
+                container.moveDown(5);
                 repaint();
             }
         });
         timer.start();
-        Timer bulletTimer = new Timer(50, new ActionListener() {
+        Timer bullettimer = new Timer(100, new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.moveBullets();
                 repaint();
             }
         });
-        bulletTimer.start();
+        bullettimer.start();
+
 
         setVisible(true);
+
     }
 
 

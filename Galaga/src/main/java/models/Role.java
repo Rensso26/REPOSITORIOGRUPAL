@@ -9,6 +9,7 @@ public class Role implements Drawable {
     private int [] coordX;
     private int [] coordY;
 
+    private int x, y;
     public Role(int[] cordX, int[] cordY) {
         this.coordX = cordX;
         this.coordY = cordY;
@@ -20,6 +21,22 @@ public class Role implements Drawable {
 
     public Role() {
 
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public int[] getCoordX() {
