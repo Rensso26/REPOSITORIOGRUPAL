@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -60,6 +61,16 @@ public class Container {
         Bullets newBullet = new Bullets(hero.getX(), hero.getY());
         bulletsHeroList.add(newBullet);
 
+    }
+    public void moveBullets() {
+        Iterator<Bullets> iterator = bulletsHeroList.iterator();
+        while (iterator.hasNext()) {
+            Bullets bullet = iterator.next();
+            bullet.moveUp(1);
+            if (bullet.getY() < 0) {
+                iterator.remove(); // Remueve la bala si está fuera de la pantalla
+            }
+        }
     }
 }
 

@@ -33,10 +33,16 @@ public class BackGround extends JFrame implements KeyListener {
             }
         });
         timer.start();
-
+        Timer bulletTimer = new Timer(50, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.moveBullets();
+                repaint();
+            }
+        });
+        bulletTimer.start();
 
         setVisible(true);
-
     }
 
 
