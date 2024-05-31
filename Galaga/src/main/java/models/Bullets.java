@@ -8,7 +8,7 @@ import java.awt.*;
 
 @Service("bullets")
 public class Bullets extends Role implements Drawable, MovableY {
-    private int speed = 10; // Velocidad con la que la bala se moverá hacia arriba
+    static int speed = 10;
 
     public Bullets(int startX, int startY) {
         setX(startX);
@@ -31,8 +31,4 @@ public class Bullets extends Role implements Drawable, MovableY {
         setY(getY() + distance * speed);
     }
 
-    @Override
-    public void speed(int speed) {
-        this.speed = speed;
-    }
 }

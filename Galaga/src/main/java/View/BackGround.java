@@ -53,6 +53,7 @@ public class BackGround extends JFrame implements KeyListener {
     public void paint(Graphics g) {
         super.paint(g);
         container.draw(g);
+        container.killEnemies();
 
     }
 

@@ -1,5 +1,6 @@
 package models;
 
+import Actions.Dieable;
 import Actions.Drawable;
 import Actions.MovableY;
 import org.springframework.stereotype.Service;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.awt.*;
 
 @Service("enemy")
-public class Enemy extends Role implements Drawable, MovableY {
+public class Enemy extends Role implements Drawable, MovableY, Dieable {
     int[] XPoints = new int[5];
     int[] YPoints = new int[5];
 
@@ -70,9 +71,13 @@ public class Enemy extends Role implements Drawable, MovableY {
 
     }
 
+
     @Override
-    public void speed(int speed) {
-
+    public void die(int xbullet, int ybullet, int i) {
+        if(YPoints[0] == ybullet){
+            if(xbullet >= XPoints[0] && xbullet <= XPoints[1]){
+                life -= i;
+            }
+        }
     }
-
 }

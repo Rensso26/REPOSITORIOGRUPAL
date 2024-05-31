@@ -59,6 +59,18 @@ public class Container {
         bulletsHeroList.add(newBullet);
 
     }
+
+    public void killEnemies() {
+        for (Enemy enemy : enemyList) {
+            for (Bullets bullet : bulletsHeroList) {
+                enemy.die(bullet.getX(), bullet.getY(), 5);
+            }
+            if (enemy.getLife() == 0){
+                enemyList.remove(enemy);
+            }
+        }
+    }
+
     public void moveBullets(){
         Iterator<Bullets> iterator = bulletsHeroList.iterator();
         while (iterator.hasNext()){
