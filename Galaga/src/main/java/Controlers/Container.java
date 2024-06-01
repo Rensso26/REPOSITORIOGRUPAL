@@ -61,12 +61,16 @@ public class Container {
     }
 
     public void killEnemies() {
-        for (Enemy enemy : enemyList) {
-            for (Bullets bullet : bulletsHeroList) {
-                enemy.die(bullet.getX(), bullet.getY(), 5);
-            }
-            if (enemy.getLife() == 0){
-                enemyList.remove(enemy);
+        Iterator<Enemy> iterator = enemyList.iterator();
+        while (iterator.hasNext()) {
+            Enemy enemys = iterator.next();
+            for (Bullets bullets : bulletsHeroList) {
+                if (bullets.getY() <= enemys.getCoordY()[3] + 10 &&
+                        bullets.getX() >= enemys.getCoordX()[0] && bullets.getX() <= enemys.getCoordX()[1]) {
+                    enemys.setLife(enemys.getLife()-5);
+                    if(enemys.getLife()<=0) iterator.remove();
+                    break;
+                }
             }
         }
     }
@@ -76,8 +80,15 @@ public class Container {
         while (iterator.hasNext()){
             Bullets bullets = iterator.next();
             bullets.moveUp(2);
-            if (bullets.getY()<0){
+            if(bullets.getY() <0 || bullets.getY() > 600){
                 iterator.remove();
+            }
+            for (Enemy enemy : enemyList) {
+                if (bullets.getY() <= enemy.getCoordY()[3]+10 &&
+                        bullets.getX() >= enemy.getCoordX()[0] && bullets.getX() <= enemy.getCoordX()[1]) {
+                    iterator.remove();
+                    break;
+                }
             }
         }
     }

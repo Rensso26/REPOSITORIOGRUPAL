@@ -28,7 +28,8 @@ public class BackGround extends JFrame implements KeyListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                container.moveDown(5);
+               container.moveDown(5);
+               container.killEnemies();
                 repaint();
             }
         });
@@ -38,13 +39,14 @@ public class BackGround extends JFrame implements KeyListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.moveBullets();
+
                 repaint();
             }
         });
         bullettimer.start();
 
-
         setVisible(true);
+
 
     }
 
@@ -53,7 +55,7 @@ public class BackGround extends JFrame implements KeyListener {
     public void paint(Graphics g) {
         super.paint(g);
         container.draw(g);
-        container.killEnemies();
+
 
     }
 
