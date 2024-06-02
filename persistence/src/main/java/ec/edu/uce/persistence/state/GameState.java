@@ -5,19 +5,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-// usamos java persistance API
-
 @Entity
 public class GameState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String playerId;
-    private int score;
+    private String name;
+    private int level;
     private int life;
-    private String level;
-    // getters y setters
+    private int points;
 
+    // Constructor sin argumentos
+    public GameState() {}
+
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -26,20 +27,20 @@ public class GameState {
         this.id = id;
     }
 
-    public String getPlayerId() {
-        return playerId;
+    public String getName() {
+        return name;
     }
 
-    public void setPlayerId(String playerId) {
-        this.playerId = playerId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getScore() {
-        return score;
+    public int getLevel() {
+        return level;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public int getLife() {
@@ -50,11 +51,11 @@ public class GameState {
         this.life = life;
     }
 
-    public String getLevel() {
-        return level;
+    public int getPoints() {
+        return points;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setPoints(int points) {
+        this.points = points;
     }
 }
