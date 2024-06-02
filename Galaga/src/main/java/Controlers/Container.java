@@ -13,7 +13,7 @@ public class Container {
 
     final int SCREEN_WIDTH = 700;
     final int SCREEN_HEIGHT = 100;
-
+    final int GAME_STATE_PANEL = 50;
     Hero hero = new Hero();
     Line line = new Line();
     Life life = new Life(hero.getLife());
@@ -24,9 +24,7 @@ public class Container {
     Random random = new Random();
 
     private int currentLevelIndex;
-
     List<SuperEnemy> superEnemyList = new ArrayList<>();
-
 
     public Container() {
         this.currentLevelIndex = 0;
@@ -35,44 +33,49 @@ public class Container {
     }
 
     private void initializeLevel1() {
-        for (int i = 0; i < 5; i++) {
-            enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT), 5, 10, 5));
+        for (int i = 0; i < 1; i++) {
+            enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT - GAME_STATE_PANEL) + GAME_STATE_PANEL, 5, 10, 5));
         }
     }
 
+
     private void initializeLevel2() {
         enemyList.clear();
-        for (int i = 0; i < 10; i++) {
-            enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT), 10, 20, 10));
+        for (int i = 0; i < 1; i++) {
+            enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT - GAME_STATE_PANEL) + GAME_STATE_PANEL, 10, 20, 10));
         }
     }
 
     private void initializeLevel3() {
         enemyList.clear();
         superEnemyList.clear();
-        int centerX = SCREEN_WIDTH / 2 - (int) (40 * 2.5) / 2;
+        int centerX = SCREEN_WIDTH / 2 - (int) (14 * 2.5) / 2;
         int centerY = SCREEN_HEIGHT / 2 - (int) (30 * 2.5) / 2;
-        superEnemyList.add(new SuperEnemy(centerX, centerY, 100));
+        superEnemyList.add(new SuperEnemy(centerX, centerY + GAME_STATE_PANEL, 100));
     }
-
 
     private void initializeNextLevel() {
-        switch (currentLevelIndex) {
-            case 1:
-                initializeLevel1();
-                break;
-            case 2:
-                initializeLevel2();
-                break;
-            case 3:
-                initializeLevel3();
-                break;
 
-            case 4:
-                nextLevel();
-                break;
+            switch (currentLevelIndex) {
+                case 1:
+                    initializeLevel3();
+                    break;
+                case 2:
+                    initializeLevel2();
+                    break;
+                case 3:
+                    initializeLevel1();
+
+                    break;
+
+                case 4:
+                    stopGame();
+                    break;
+            }
+
         }
-    }
+
+
 
 
 
@@ -81,6 +84,9 @@ public class Container {
         hero.draw(g);
         life.draw(g);
         score.draw(g);
+
+        g.setColor(Color.WHITE);
+        g.drawString("Nivel " + currentLevelIndex, 350, 20);
 
         for (Enemy enemy : enemyList) {
             enemy.draw(g);
@@ -183,12 +189,11 @@ public class Container {
     }
 
 
-    private void nextLevel() {
+        private void stopGame() {
 
-            // Juego completado
             JOptionPane.showMessageDialog(null, "¡Has completado todos los niveles!", "Juego completado", JOptionPane.INFORMATION_MESSAGE);
 
-    }
+        }
 
     public boolean isGameOver(int dividerY) {
         if (hero.getLife() <= 0) {

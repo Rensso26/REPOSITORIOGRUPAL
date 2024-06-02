@@ -12,6 +12,8 @@ public class BackGround extends JFrame implements KeyListener {
     private static final long serialVersionUID = 1L;
     private static final int SCREEN_HEIGHT = 600;
     private static final int DIVIDER_Y = (int) (SCREEN_HEIGHT * 0.66);
+    private boolean movingLeft = false;
+    private boolean movingRight = false;
 
     Controlers.Container container;
     JPanel panel;
@@ -29,19 +31,19 @@ public class BackGround extends JFrame implements KeyListener {
 
         panel = new JPanel();
         panel.setBackground(Color.black);
-        setContentPane(panel);
+        add(gamePanel);
 
         addKeyListener(this);
 
         enemyTimer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //container.moveDown(3);
                 container.killEnemies();
                 if (container.isGameOver(DIVIDER_Y)) {
-                    //stopGame();
+                    stopGame();
+
                 }
-                repaint();
+                gamePanel.repaint();
             }
         });
         enemyTimer.start();
@@ -50,13 +52,30 @@ public class BackGround extends JFrame implements KeyListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.moveBullets();
-                repaint();
+                gamePanel.repaint();
             }
         });
         bulletTimer.start();
 
+        setLocationRelativeTo(null);
+
         setVisible(true);
+
+        Timer moveTimer = new Timer(50, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (movingLeft) {
+                    container.moveLeft(10);
+                }
+                if (movingRight) {
+                    container.moveRight(10);
+                }
+                gamePanel.repaint();
+            }
+        });
+        moveTimer.start();
     }
+
 
     @Override
     public void paint(Graphics g) {
@@ -74,28 +93,43 @@ public class BackGround extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         setFocusable(true);
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_A : {
+            case KeyEvent.VK_A: {
+                movingLeft = true;
                 container.moveLeft(10);
                 break;
             }
-            case KeyEvent.VK_D : {
+            case KeyEvent.VK_D: {
+                movingRight = true;
                 container.moveRight(10);
                 break;
             }
-            case KeyEvent.VK_SPACE : {
+            case KeyEvent.VK_SPACE: {
                 container.shootHeroBullet();
                 break;
             }
             default:
                 break;
         }
-        repaint();
+        gamePanel.repaint();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_A: {
+                movingLeft = false;
+                break;
+            }
+            case KeyEvent.VK_D: {
+                movingRight = false;
+                break;
+            }
+            default:
+                break;
+        }
 
     }
+
     private void stopGame() {
         enemyTimer.stop();
         bulletTimer.stop();

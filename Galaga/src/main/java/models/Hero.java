@@ -10,7 +10,7 @@ import java.awt.*;
 
 @Service ("hero")
 public class Hero extends Role implements Drawable, MovableX {
-    int[] XPoints = {350, 400, 300};
+    int[] XPoints = {400, 450, 350};
     int[] YPoints = {500, 550, 550};
 
     @Value("Payer 1")

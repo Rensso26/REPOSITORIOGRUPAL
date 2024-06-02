@@ -14,6 +14,6 @@ public class Life implements Drawable {
     @Override
     public void draw(Graphics graphics) {
         graphics.setColor(Color.RED);
-        graphics.fillRect(20, 40, life*3, 20);
+        graphics.fillRect(20, 20, life*2, 15);
     }
 }

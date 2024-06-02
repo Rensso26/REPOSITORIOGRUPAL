@@ -15,7 +15,7 @@ public class Score implements Drawable, Contaible {
     @Override
     public void draw(Graphics graphics) {
         graphics.setColor(Color.WHITE);
-        graphics.drawString("Score: " + score, 600, 50);
+        graphics.drawString("Score: " + score, 650, 20);
     }
 
 

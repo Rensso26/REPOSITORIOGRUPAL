@@ -11,6 +11,7 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
 
     private int life;
 
+
     public SuperEnemy(int centerX, int centerY, int life) {
         super(5);
         int width = 40;
@@ -31,7 +32,8 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
 
         setCoordX(XPoints);
         setCoordY(YPoints);
-        this.life = life;
+        this.life = 100;
+
     }
 
     public int getLife() {
@@ -44,8 +46,9 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.RED); // Usar un color diferente para diferenciar el SuperEnemy
+        g.setColor(Color.RED);
         g.fillPolygon(getCoordX(), getCoordY(), getCoordY().length);
+
     }
 
     @Override
