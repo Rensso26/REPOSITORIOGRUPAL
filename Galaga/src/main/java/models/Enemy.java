@@ -14,24 +14,42 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
 
     private int life;
     private int rewild;
-
-    public Enemy(int randomX, int randomY,int life, int rewild){
+    private int damage;
+    public Enemy(int randomX, int randomY,int life, int rewild, int damage){
         super(5);
         XPoints[0]=  randomX;
-        XPoints[1]=  randomX + 100;
-        XPoints[2]=  randomX + 100;
-        XPoints[3]=  randomX + 50;
+        XPoints[1]=  randomX + 40;
+        XPoints[2]=  randomX + 40;
+        XPoints[3]=  randomX + 20;
         XPoints[4]=  randomX;
 
         YPoints[0]=  randomY;
         YPoints[1]=  randomY;
-        YPoints[2]=  randomY + 50;
-        YPoints[3]=  randomY + 25;
-        YPoints[4]=  randomY + 50;
+        YPoints[2]=  randomY + 30;
+        YPoints[3]=  randomY + 15;
+        YPoints[4]=  randomY + 30;
         setCoordX(XPoints);
         setCoordY(YPoints);
         this.life = life;
         this.rewild = rewild;
+        this.damage = damage;
+    }
+
+    public Enemy(int randomX, int randomY){
+        super(5);
+        XPoints[0]=  randomX;
+        XPoints[1]=  randomX + 40;
+        XPoints[2]=  randomX + 40;
+        XPoints[3]=  randomX + 20;
+        XPoints[4]=  randomX;
+
+        YPoints[0]=  randomY;
+        YPoints[1]=  randomY;
+        YPoints[2]=  randomY + 30;
+        YPoints[3]=  randomY + 15;
+        YPoints[4]=  randomY + 30;
+        setCoordX(XPoints);
+        setCoordY(YPoints);
     }
 
 
@@ -47,9 +65,10 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
         return rewild;
     }
 
-    public void setRewild(int rewild) {
-        this.rewild = rewild;
+    public int getDamage() {
+        return damage;
     }
+
 
     @Override
     public void draw(Graphics g) {
@@ -79,5 +98,27 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
                 life -= i;
             }
         }
+    }
+    public void reduceLife(int damage) {
+        this.life -= damage;
+    }
+
+    public int getWidth() {
+        // La anchura es la distancia entre el primer y segundo punto en el eje X
+        return XPoints[1] - XPoints[0];
+    }
+
+    public int getHeight() {
+        int maxY = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE;
+        for (int y : YPoints) {
+            if (y > maxY) {
+                maxY = y;
+            }
+            if (y < minY) {
+                minY = y;
+            }
+        }
+        return maxY - minY;
     }
 }

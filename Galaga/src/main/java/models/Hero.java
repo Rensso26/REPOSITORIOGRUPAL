@@ -10,9 +10,9 @@ import java.awt.*;
 
 @Service ("hero")
 public class Hero extends Role implements Drawable, MovableX {
-    int[] XPoints = {400,450,350};
+    int[] XPoints = {350, 400, 300};
+    int[] YPoints = {500, 550, 550};
 
-    int[] YPoints = {500,550,550};
     @Value("Payer 1")
     private String name;
     private int life;
@@ -22,13 +22,15 @@ public class Hero extends Role implements Drawable, MovableX {
         super(3);
         setCoordX(XPoints);
         setCoordY(YPoints);
+        this.life = 100; // Establece la vida inicial del héroe
+        this.score = 0; // Establece el puntaje inicial del héroe
     }
-    public Hero(String name, int life, int score){
+
+    public Hero(String name, int life, int score) {
         this.name = name;
         this.life = life;
         this.score = score;
     }
-
 
     public String getName() {
         return name;
@@ -54,25 +56,24 @@ public class Hero extends Role implements Drawable, MovableX {
         this.score = score;
     }
 
-
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
-        g.fillPolygon(getCoordX(),getCoordY(),getCoordY().length);
+        g.fillPolygon(getCoordX(), getCoordY(), getCoordY().length);
     }
 
     @Override
     public void moveRigth(int distance) {
-        for(int i = 0; i< XPoints.length; i++) {
-            XPoints[i]= XPoints[i] + distance;
+        for (int i = 0; i < XPoints.length; i++) {
+            XPoints[i] = XPoints[i] + distance;
             setCoordX(XPoints);
         }
     }
 
     @Override
     public void moveLeft(int distance) {
-        for(int i = 0; i< XPoints.length; i++) {
-            XPoints[i]= XPoints[i] - distance;
+        for (int i = 0; i < XPoints.length; i++) {
+            XPoints[i] = XPoints[i] - distance;
             setCoordX(XPoints);
         }
     }
@@ -87,5 +88,14 @@ public class Hero extends Role implements Drawable, MovableX {
         return YPoints[0]; // Retorna la coordenada Y del vértice superior
     }
 
-
+    // Método para reducir la vida del héroe cuando recibe daño
+    public void reduceLife(int damage) {
+        life -= damage;
+    }
+    public boolean collidesWith(Bullets bullet) {
+        Polygon heroPolygon = new Polygon(getCoordX(), getCoordY(), getCoordX().length);
+        Rectangle bulletRect = new Rectangle(bullet.getX(), bullet.getY(), 5, 10);
+        return heroPolygon.intersects(bulletRect);
+    }
 }
+

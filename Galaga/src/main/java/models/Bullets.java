@@ -31,4 +31,7 @@ public class Bullets extends Role implements Drawable, MovableY {
         setY(getY() + distance * speed);
     }
 
+
+
 }
+
