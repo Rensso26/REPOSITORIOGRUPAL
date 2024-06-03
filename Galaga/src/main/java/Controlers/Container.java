@@ -185,12 +185,11 @@ public class Container {
         }
     }
 
+    private void stopGame() {
 
-        private void stopGame() {
+        JOptionPane.showMessageDialog(null, "¡Has completado todos los niveles!", "Juego completado", JOptionPane.INFORMATION_MESSAGE);
 
-            JOptionPane.showMessageDialog(null, "¡Has completado todos los niveles!", "Juego completado", JOptionPane.INFORMATION_MESSAGE);
-
-        }
+    }
 
     public boolean isGameOver(int dividerY) {
         if (hero.getLife() <= 0) {
