@@ -61,7 +61,7 @@ public class BackGround extends JFrame implements KeyListener {
 
         setVisible(true);
 
-        Timer moveTimer = new Timer(50, new ActionListener() {
+        Timer moveTimer = new Timer(150, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (movingLeft) {

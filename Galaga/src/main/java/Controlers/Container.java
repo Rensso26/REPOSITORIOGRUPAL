@@ -28,7 +28,7 @@ public class Container {
 
     public Container() {
         this.currentLevelIndex = 0;
-        initializeNextLevel();
+
 
     }
 
@@ -51,7 +51,8 @@ public class Container {
         superEnemyList.clear();
         int centerX = SCREEN_WIDTH / 2 - (int) (14 * 2.5) / 2;
         int centerY = SCREEN_HEIGHT / 2 - (int) (30 * 2.5) / 2;
-        superEnemyList.add(new SuperEnemy(centerX, centerY + GAME_STATE_PANEL, 100));
+        SuperEnemy superEnemy = new SuperEnemy(centerX, centerY + GAME_STATE_PANEL, 100);
+        superEnemyList.add(superEnemy);
     }
 
     private void initializeNextLevel() {
@@ -74,10 +75,6 @@ public class Container {
             }
 
         }
-
-
-
-
 
     public void draw(Graphics g) {
         line.draw(g);

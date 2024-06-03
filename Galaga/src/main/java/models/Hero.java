@@ -22,8 +22,8 @@ public class Hero extends Role implements Drawable, MovableX {
         super(3);
         setCoordX(XPoints);
         setCoordY(YPoints);
-        this.life = 100; // Establece la vida inicial del héroe
-        this.score = 0; // Establece el puntaje inicial del héroe
+        this.life = 100;
+        this.score = 0;
     }
 
     public Hero(String name, int life, int score) {
