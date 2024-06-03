@@ -35,8 +35,8 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
         this.damage = damage;
     }
 
-    public Enemy(int randomX, int randomY){
-        super(5);
+    public void repostEnemy(int randomX, int randomY){
+
         XPoints[0]=  randomX;
         XPoints[1]=  randomX + 40;
         XPoints[2]=  randomX + 40;

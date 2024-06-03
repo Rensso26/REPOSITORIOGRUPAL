@@ -38,10 +38,10 @@ public class BackGround extends JFrame implements KeyListener {
         enemyTimer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                container.moveDown(5);
                 container.killEnemies();
-                if (container.isGameOver(DIVIDER_Y)) {
+                if (container.isGameOver()) {
                     stopGame();
-
                 }
                 gamePanel.repaint();
             }

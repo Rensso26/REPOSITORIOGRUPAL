@@ -1,10 +1,12 @@
 package models;
 
 import Actions.Drawable;
+import Actions.MovableX;
+import Actions.MovableY;
 
 import java.awt.*;
 
-public class LifeSuperEnemy implements Drawable {
+public class LifeSuperEnemy implements Drawable, MovableY {
     int lifeSuperEnemy;
     int x,y;
 
@@ -26,6 +28,16 @@ public class LifeSuperEnemy implements Drawable {
     @Override
     public void draw(Graphics graphics) {
         graphics.setColor(Color.GREEN);
-        graphics.fillRect(20, 20, lifeSuperEnemy*2, 15);
+        graphics.fillRect(x, y, lifeSuperEnemy*2, 15);
+    }
+
+    @Override
+    public void moveUp(int distance) {
+        y-= distance;
+    }
+
+    @Override
+    public void moveDown(int distance) {
+        y += distance;
     }
 }

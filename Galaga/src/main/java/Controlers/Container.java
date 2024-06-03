@@ -17,6 +17,8 @@ public class Container {
     Hero hero = new Hero();
     Line line = new Line();
     Life life = new Life(hero.getLife());
+    LifeSuperEnemy lifeSuperEnemy ;
+
     Score score = new Score(hero.getScore());
     List<Enemy> enemyList = new ArrayList<>();
     List<Bullets> bulletsHeroList = new ArrayList<>();
@@ -51,7 +53,7 @@ public class Container {
         superEnemyList.clear();
         int centerX = SCREEN_WIDTH / 2 - (int) (14 * 2.5) / 2;
         int centerY = SCREEN_HEIGHT / 2 - (int) (30 * 2.5) / 2;
-        SuperEnemy superEnemy = new SuperEnemy(centerX, centerY + GAME_STATE_PANEL, 100);
+        SuperEnemy superEnemy = new SuperEnemy(centerX, centerY + GAME_STATE_PANEL, 100,15);
         superEnemyList.add(superEnemy);
     }
 
@@ -66,7 +68,6 @@ public class Container {
                     break;
                 case 3:
                     initializeLevel1();
-
                     break;
 
                 case 4:
@@ -96,6 +97,8 @@ public class Container {
         }
         for (SuperEnemy superenemy : superEnemyList) {
             superenemy.draw(g);
+            lifeSuperEnemy= new LifeSuperEnemy(superenemy.getLife(),superenemy.getCoordX()[0],superenemy.getCoordY()[0]-30);
+            lifeSuperEnemy.draw(g);
         }
     }
 
@@ -110,10 +113,21 @@ public class Container {
     public void moveDown(int distance) {
         for (Enemy enemy : enemyList) {
             enemy.moveDown(distance);
-            if(enemy.getCoordY()[2]>=(600*0.66)){
-                enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT)));
-                hero.setLife(hero.getLife()-enemy.getDamage());
-                enemyList.remove(enemy);
+            for (int y : enemy.getCoordY()) {
+                if (y >= 600*0.66) {
+                    enemy.repostEnemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT - GAME_STATE_PANEL) + GAME_STATE_PANEL);
+                    hero.setLife(hero.getLife()-5);
+                }
+            }
+        }
+        for (SuperEnemy superEnemy : superEnemyList) {
+            superEnemy.moveDown(distance);
+            lifeSuperEnemy.moveDown(distance);
+            for (int y : superEnemy.getCoordY()) {
+                if (y >= 600*0.66) {
+                    superEnemy.repostEnemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT - GAME_STATE_PANEL) + GAME_STATE_PANEL);
+                    hero.setLife(hero.getLife()-5);
+                }
             }
         }
 
@@ -124,7 +138,7 @@ public class Container {
     }
 
     public void killEnemies() {
-        if (enemyList.isEmpty()&&superEnemyList.isEmpty()) {
+        if (enemyList.isEmpty()&&superEnemyList.isEmpty()&&currentLevelIndex<=3) {
             currentLevelIndex+=1;
             initializeNextLevel();
         }
@@ -156,6 +170,7 @@ public class Container {
                     superEnemy.setLife(superEnemy.getLife() - 5);
                     if (superEnemy.getLife() <= 0) {
                         iteratorS.remove();
+                        score.plus(superEnemy.getRewild());
                     }
                     break;
                 }
@@ -185,25 +200,17 @@ public class Container {
         }
     }
 
-    private void stopGame() {
 
-        JOptionPane.showMessageDialog(null, "¡Has completado todos los niveles!", "Juego completado", JOptionPane.INFORMATION_MESSAGE);
+        private void stopGame() {
 
-    }
+            JOptionPane.showMessageDialog(null, "¡Has completado todos los niveles!", "Juego completado", JOptionPane.INFORMATION_MESSAGE);
 
-    public boolean isGameOver(int dividerY) {
+        }
+
+    public boolean isGameOver() {
         if (hero.getLife() <= 0) {
             return true;
         }
-
-        for (Enemy enemy : enemyList) {
-            for (int y : enemy.getCoordY()) {
-                if (y >= dividerY) {
-                    return true;
-                }
-            }
-        }
-
 
         return false;
     }

@@ -10,13 +10,15 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
     int[] YPoints = new int[5];
 
     private int life;
-    private int score;
-    private LifeSuperEnemy lifeSuperEnemy;
+    private int rewild;
 
-    public SuperEnemy(int centerX, int centerY, int life) {
+    private int damege;
+
+    public SuperEnemy(int centerX, int centerY, int life, int rewild) {
         int width = 40;
         int height = 30;
         double scale = 2.5;
+
         XPoints[0] = centerX;
         XPoints[1] = centerX + (int)(width * scale);
         XPoints[2] = centerX + (int)(width * scale);
@@ -33,10 +35,25 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
         setCoordY(YPoints);
 
         this.life = life;
-        this.lifeSuperEnemy = new LifeSuperEnemy(life, centerX, centerY -20);
-
+        this.rewild = rewild;
     }
 
+    public void repostEnemy(int randomX, int randomY){
+
+        XPoints[0]=  randomX;
+        XPoints[1]=  randomX + 40;
+        XPoints[2]=  randomX + 40;
+        XPoints[3]=  randomX + 20;
+        XPoints[4]=  randomX;
+
+        YPoints[0]=  randomY;
+        YPoints[1]=  randomY;
+        YPoints[2]=  randomY + 30;
+        YPoints[3]=  randomY + 15;
+        YPoints[4]=  randomY + 30;
+        setCoordX(XPoints);
+        setCoordY(YPoints);
+    }
     public int getLife() {
         return life;
     }
@@ -45,20 +62,27 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
         this.life = life;
     }
 
-    public int getScore() {
-        return score;
+    public int getRewild() {
+        return rewild;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setRewild(int rewild) {
+        this.rewild = rewild;
+    }
+
+    public int getDamege() {
+        return damege;
+    }
+
+    public void setDamege(int damege) {
+        this.damege = damege;
     }
 
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.RED);
         g.fillPolygon(getCoordX(), getCoordY(), getCoordY().length);
-        lifeSuperEnemy.setPosition(XPoints[0], YPoints[0] - 20);
-        lifeSuperEnemy.draw(g);
+
     }
 
     @Override
@@ -77,7 +101,6 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
         if (YPoints[0] == ybullet) {
             if (xbullet >= XPoints[0] && xbullet <= XPoints[1]) {
                 life -= i;
-                this.lifeSuperEnemy.setLife(life);
             }
         }
     }
