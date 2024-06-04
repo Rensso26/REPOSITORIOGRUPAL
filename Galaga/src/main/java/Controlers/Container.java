@@ -4,6 +4,8 @@ import models.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,7 +44,6 @@ public class Container {
             enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT - GAME_STATE_PANEL) + GAME_STATE_PANEL, 5, 10, 5));
         }
     }
-
 
     private void initializeLevel2() {
         enemyList.clear();
@@ -138,7 +139,16 @@ public class Container {
     }
 
     public void shootHeroBullet() {
-        bulletsHeroList.add(new Bullets(hero.getX(), hero.getY()));
+        bulletsHeroList.add(new Bullets(hero.getX(), hero.getY(),Color.WHITE));
+
+    }
+    public void enemyShoot() {
+        for (Enemy enemy : enemyList) {
+            bulletsEnemyList.add(new Bullets(enemy.getCoordX()[0], enemy.getCoordY()[0], Color.RED)); // Bala de enemigo en rojo
+        }
+        for (SuperEnemy superEnemy : superEnemyList) {
+            bulletsEnemyList.add(new Bullets(superEnemy.getCoordX()[0], superEnemy.getCoordY()[0], Color.YELLOW)); // Bala de super enemigo en rojo
+        }
     }
 
     public void killEnemies() {
@@ -198,7 +208,7 @@ public class Container {
         while (enemyBulletIterator.hasNext()) {
             Bullets bullet = enemyBulletIterator.next();
             bullet.moveDown(2);
-            if (bullet.getY() > SCREEN_HEIGHT) {
+            if (bullet.getY()  < 0) {
                 enemyBulletIterator.remove();
             }
         }

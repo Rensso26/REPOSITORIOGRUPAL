@@ -121,4 +121,18 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
         }
         return maxY - minY;
     }
+    public Bullets shoot() {
+        int bulletX = (XPoints[0] + XPoints[1]) / 2;
+        int bulletY = YPoints[2];
+        return new Bullets(bulletX, bulletY, Color.GREEN);
+    }
+
+    public int getX() {
+        return XPoints[0]; // Retorna la coordenada X del vértice superior
+    }
+
+    // Método para obtener la coordenada Y desde donde disparar
+    public int getY() {
+        return YPoints[0]; //
+    }
 }

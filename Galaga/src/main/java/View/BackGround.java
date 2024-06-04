@@ -1,7 +1,5 @@
 package View;
 
-import Controlers.Container;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,8 +11,10 @@ public class BackGround extends JFrame implements KeyListener {
 
     private static final long serialVersionUID = 1L;
     private static final int SCREEN_HEIGHT = 600;
+    private static final int DIVIDER_Y = (int) (SCREEN_HEIGHT * 0.66);
     private boolean movingLeft = false;
     private boolean movingRight = false;
+    private Timer enemyShootTimer;
 
     Controlers.Container container = new Controlers.Container();
     JPanel panel = new JPanel();
@@ -33,7 +33,7 @@ public class BackGround extends JFrame implements KeyListener {
 
         botonIni.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            container.InitialHero(name.getText(), password.getText());
+                container.InitialHero(name.getText(), password.getText());
                 new BackGround();
             }
         });
@@ -49,20 +49,6 @@ public class BackGround extends JFrame implements KeyListener {
         setLocationRelativeTo(null); // Centra la ventana en la pantalla
         setVisible(true);
     }
-
-//        botonIni.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                String usuario = name.getText();
-//                String contrasena = new String(password.getText());
-//
-//                // Aquí deberías verificar las credenciales, por ejemplo:
-//                if (usuario.equals("usuario") && contrasena.equals("contrasena")) {
-//                    new BackGround();
-//                } else {
-//                    JOptionPane.showMessageDialog(BackGround.this, "Credenciales incorrectas");
-//                }
-//            }
-//        });
     public BackGround() {
 
         setTitle("Galaga");
@@ -70,6 +56,8 @@ public class BackGround extends JFrame implements KeyListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
+
+        panel = new JPanel();
         panel.setBackground(Color.black);
         add(gamePanel);
 
@@ -114,7 +102,17 @@ public class BackGround extends JFrame implements KeyListener {
             }
         });
         moveTimer.start();
+
+        enemyShootTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.enemyShoot();
+            }
+        });
+        enemyShootTimer.start();
     }
+
+
 
 
     @Override

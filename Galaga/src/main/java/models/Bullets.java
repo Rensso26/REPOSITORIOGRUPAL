@@ -6,18 +6,21 @@ import org.springframework.stereotype.Service;
 
 import java.awt.*;
 
+
+
 @Service("bullets")
 public class Bullets extends Role implements Drawable, MovableY {
     static int speed = 10;
-
-    public Bullets(int startX, int startY) {
+    private Color color;
+    public Bullets(int startX, int startY, Color color) {
         setX(startX);
         setY(startY);
+        this.color = color;
     }
 
     @Override
     public void draw(Graphics graphics) {
-        graphics.setColor(Color.RED);
+        graphics.setColor(color);
         graphics.fillOval(getX(), getY(), 5, 10);
     }
 
