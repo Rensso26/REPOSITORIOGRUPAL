@@ -15,7 +15,7 @@ public class GameState {
     private int life;
     private int points;
 
-    // Constructor sin argumentos
+
     public GameState() {}
 
     // Getters y setters
