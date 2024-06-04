@@ -13,11 +13,12 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
     private int rewild;
 
     private int damege;
+    int width = 40;
+    int height = 30;
+    double scale = 2.5;
 
     public SuperEnemy(int centerX, int centerY, int life, int rewild) {
-        int width = 40;
-        int height = 30;
-        double scale = 2.5;
+
 
         XPoints[0] = centerX;
         XPoints[1] = centerX + (int)(width * scale);
@@ -39,11 +40,13 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
     }
 
     public void repostEnemy(int randomX, int randomY){
-
         XPoints[0]=  randomX;
         XPoints[1]=  randomX + 40;
         XPoints[2]=  randomX + 40;
         XPoints[3]=  randomX + 20;
+        XPoints[1] = randomX + (int)(width * scale);
+        XPoints[2] = randomX + (int)(width * scale);
+        XPoints[3] = randomX + (int)((width / 2) * scale);
         XPoints[4]=  randomX;
 
         YPoints[0]=  randomY;
@@ -51,6 +54,9 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
         YPoints[2]=  randomY + 30;
         YPoints[3]=  randomY + 15;
         YPoints[4]=  randomY + 30;
+        YPoints[2] = randomY + (int)(height * scale);
+        YPoints[3] = randomY + (int)((height / 2) * scale);
+        YPoints[4] = randomY + (int)(height * scale);
         setCoordX(XPoints);
         setCoordY(YPoints);
     }
@@ -64,10 +70,6 @@ public class SuperEnemy extends Role implements Drawable, MovableY, Dieable {
 
     public int getRewild() {
         return rewild;
-    }
-
-    public void setRewild(int rewild) {
-        this.rewild = rewild;
     }
 
     public int getDamege() {
