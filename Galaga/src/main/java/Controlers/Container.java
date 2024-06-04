@@ -16,7 +16,7 @@ public class Container {
     final int GAME_STATE_PANEL = 50;
     Hero hero = new Hero();
     Line line = new Line();
-    Life life = new Life(hero.getLife());
+    Life life ;
     LifeSuperEnemy lifeSuperEnemy ;
 
     Score score = new Score(hero.getScore());
@@ -30,8 +30,11 @@ public class Container {
 
     public Container() {
         this.currentLevelIndex = 0;
+    }
 
-
+    public void InitialHero(String name, String password){
+        hero.setName(name);
+        hero.setPassword(password);
     }
 
     private void initializeLevel1() {
@@ -61,13 +64,13 @@ public class Container {
 
             switch (currentLevelIndex) {
                 case 1:
-                    initializeLevel3();
+                    initializeLevel1();
                     break;
                 case 2:
                     initializeLevel2();
                     break;
                 case 3:
-                    initializeLevel1();
+                    initializeLevel3();
                     break;
 
                 case 4:
@@ -80,6 +83,7 @@ public class Container {
     public void draw(Graphics g) {
         line.draw(g);
         hero.draw(g);
+        life = new Life(hero.getLife());
         life.draw(g);
         score.draw(g);
 

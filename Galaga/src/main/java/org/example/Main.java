@@ -4,6 +4,6 @@ import View.BackGround;
 
 public class Main {
     public static void main(String[] args) {
-        BackGround galaga = new BackGround();
+        BackGround galaga = new BackGround(true);
     }
 }

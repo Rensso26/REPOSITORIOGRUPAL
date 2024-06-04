@@ -1,5 +1,7 @@
 package View;
 
+import Controlers.Container;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,25 +13,63 @@ public class BackGround extends JFrame implements KeyListener {
 
     private static final long serialVersionUID = 1L;
     private static final int SCREEN_HEIGHT = 600;
-    private static final int DIVIDER_Y = (int) (SCREEN_HEIGHT * 0.66);
     private boolean movingLeft = false;
     private boolean movingRight = false;
 
-    Controlers.Container container;
-    JPanel panel;
+    Controlers.Container container = new Controlers.Container();
+    JPanel panel = new JPanel();
     Timer enemyTimer;
     Timer bulletTimer;
-    GamePanel gamePanel;
+    GamePanel gamePanel = new GamePanel(container);
+
+
+    public BackGround(boolean inizialization){
+        setTitle("Inisio de sesio");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        JTextField name = new JTextField(20);
+        JTextField password = new JTextField(20);
+        JButton botonIni = new JButton("Iniciar sesión");
+
+        botonIni.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            container.InitialHero(name.getText(), password.getText());
+                new BackGround();
+            }
+        });
+        JPanel panel = new JPanel(new GridLayout(3, 2));
+        panel.add(new JLabel("Usuario:"));
+        panel.add(name);
+        panel.add(new JLabel("Contraseña:"));
+        panel.add(password);
+        panel.add(botonIni);
+
+        getContentPane().add(panel);
+        pack();
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        setVisible(true);
+    }
+
+//        botonIni.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                String usuario = name.getText();
+//                String contrasena = new String(password.getText());
+//
+//                // Aquí deberías verificar las credenciales, por ejemplo:
+//                if (usuario.equals("usuario") && contrasena.equals("contrasena")) {
+//                    new BackGround();
+//                } else {
+//                    JOptionPane.showMessageDialog(BackGround.this, "Credenciales incorrectas");
+//                }
+//            }
+//        });
     public BackGround() {
 
         setTitle("Galaga");
         setSize(800,SCREEN_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        container = new Controlers.Container();
-        gamePanel = new GamePanel(container);
 
-        panel = new JPanel();
         panel.setBackground(Color.black);
         add(gamePanel);
 
