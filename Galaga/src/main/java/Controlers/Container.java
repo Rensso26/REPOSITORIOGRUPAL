@@ -30,6 +30,7 @@ public class Container {
     private int currentLevelIndex;
     List<SuperEnemy> superEnemyList = new ArrayList<>();
 
+
     public Container() {
         this.currentLevelIndex = 0;
     }
@@ -144,42 +145,41 @@ public class Container {
     }
     public void enemyShoot() {
         for (Enemy enemy : enemyList) {
-            bulletsEnemyList.add(new Bullets(enemy.getCoordX()[0], enemy.getCoordY()[0], Color.RED)); // Bala de enemigo en rojo
+            bulletsEnemyList.add(new Bullets(enemy.getCoordX()[0], enemy.getCoordY()[1], Color.RED));
         }
         for (SuperEnemy superEnemy : superEnemyList) {
-            bulletsEnemyList.add(new Bullets(superEnemy.getCoordX()[0], superEnemy.getCoordY()[0], Color.YELLOW)); // Bala de super enemigo en rojo
+            bulletsEnemyList.add(new Bullets(superEnemy.getCoordX()[1], superEnemy.getCoordY()[1], Color.YELLOW));
         }
     }
 
     public void killEnemies() {
-        if (enemyList.isEmpty()&&superEnemyList.isEmpty()&&currentLevelIndex<=3) {
-            currentLevelIndex+=1;
+        if (enemyList.isEmpty() && superEnemyList.isEmpty() && currentLevelIndex <= 3) {
+            currentLevelIndex += 1;
             initializeNextLevel();
         }
         Iterator<Enemy> iterator = enemyList.iterator();
-        Iterator<SuperEnemy> iteratorS = superEnemyList.iterator();
         while (iterator.hasNext()) {
-            Enemy enemys = iterator.next();
+            Enemy enemy = iterator.next();
             for (Bullets bullets : bulletsHeroList) {
-                if (bullets.getY() <= enemys.getCoordY()[2] &&
-                        bullets.getX() >= enemys.getCoordX()[0] && bullets.getX() <= enemys.getCoordX()[1]) {
+                if (bullets.getY() <= enemy.getCoordY()[2] &&
+                        bullets.getX() >= enemy.getCoordX()[0] && bullets.getX() <= enemy.getCoordX()[1]) {
                     bulletsHeroList.remove(bullets);
-                    enemys.setLife(enemys.getLife()-5);
-                    if(enemys.getLife()<=0){
+                    enemy.setLife(enemy.getLife() - 5);
+                    if (enemy.getLife() <= 0) {
                         iterator.remove();
-                        score.plus(enemys.getRewild());
+                        score.plus(enemy.getRewild());
                     }
                     break;
                 }
 
             }
-
         }
+        Iterator<SuperEnemy> iteratorS = superEnemyList.iterator();
         while (iteratorS.hasNext()) {
             SuperEnemy superEnemy = iteratorS.next();
             for (Bullets bullets : bulletsHeroList) {
                 if (bullets.getY() <= superEnemy.getCoordY()[2] &&
-                        bullets.getX() >= superEnemy.getCoordX()[0] && bullets.getX() <= superEnemy.getCoordX()[1]){
+                        bullets.getX() >= superEnemy.getCoordX()[0] && bullets.getX() <= superEnemy.getCoordX()[1]) {
                     bulletsHeroList.remove(bullets);
                     superEnemy.setLife(superEnemy.getLife() - 5);
                     if (superEnemy.getLife() <= 0) {
@@ -190,11 +190,29 @@ public class Container {
                 }
             }
         }
+        //AGREGADO
+        BulletCollisionsWithHero();
+    }
 
+    //AGREGADO
+    public void BulletCollisionsWithHero() {
+        Iterator<Bullets> enemyBulletIterator = bulletsEnemyList.iterator();
+        while (enemyBulletIterator.hasNext()) {
+            Bullets bullet = enemyBulletIterator.next();
+            if (bullet.getY() + 10 >= hero.getY() && bullet.getX() + 5 >= hero.getX() && bullet.getX() <= hero.getX() + hero.getWidth()) {
+                enemyBulletIterator.remove();
+                hero.setLife(hero.getLife() - 5);
+                if (hero.getLife() <= 0) {
+                    stopGame();
+                    return;
 
+                }
+            }
+        }
     }
 
     public void moveBullets() {
+
         Iterator<Bullets> heroBulletIterator = bulletsHeroList.iterator();
         while (heroBulletIterator.hasNext()) {
             Bullets bullet = heroBulletIterator.next();
@@ -204,29 +222,32 @@ public class Container {
             }
         }
 
+
         Iterator<Bullets> enemyBulletIterator = bulletsEnemyList.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullets bullet = enemyBulletIterator.next();
             bullet.moveDown(2);
+
             if (bullet.getY()  < 0) {
                 enemyBulletIterator.remove();
             }
         }
+        //AGREGADO
+        BulletCollisionsWithHero();
     }
 
 
+
         private void stopGame() {
-
-            JOptionPane.showMessageDialog(null, "¡Has completado todos los niveles!", "Juego completado", JOptionPane.INFORMATION_MESSAGE);
-
+            //AGREGADO
+            String message = (hero.getLife() <= 0) ? "¡Has sido derrotado!" : "¡Has completado todos los niveles!";
+            JOptionPane.showMessageDialog(null, message, "Juego terminado", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
         }
 
     public boolean isGameOver() {
-        if (hero.getLife() <= 0) {
-            return true;
-        }
-
-        return false;
+        //AGREGADO
+        return hero.getLife() <= 0;
     }
 
 }

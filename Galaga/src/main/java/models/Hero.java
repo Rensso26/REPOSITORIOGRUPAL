@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+
 import java.awt.*;
 
 @Service ("hero")
@@ -19,6 +20,8 @@ public class Hero extends Role implements Drawable, MovableX {
     private String password;
     private int life;
     private int score;
+    private int width; // Ancho del héroe
+    private int height; // Altura del héroe
 
     public Hero() {
         super(3);
@@ -103,10 +106,41 @@ public class Hero extends Role implements Drawable, MovableX {
     public void reduceLife(int damage) {
         life -= damage;
     }
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int[] getXPoints() {
+        return XPoints;
+    }
+
+    public void setXPoints(int[] XPoints) {
+        this.XPoints = XPoints;
+    }
+
+    public int[] getYPoints() {
+        return YPoints;
+    }
+
+    public void setYPoints(int[] YPoints) {
+        this.YPoints = YPoints;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public boolean collidesWith(Bullets bullet) {
         Polygon heroPolygon = new Polygon(getCoordX(), getCoordY(), getCoordX().length);
         Rectangle bulletRect = new Rectangle(bullet.getX(), bullet.getY(), 5, 10);
         return heroPolygon.intersects(bulletRect);
     }
 }
-

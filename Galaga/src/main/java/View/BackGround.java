@@ -35,7 +35,6 @@ public class BackGround extends JFrame implements KeyListener {
             public void actionPerformed(ActionEvent e) {
                 container.InitialHero(name.getText(), password.getText());
                 new BackGround();
-                dispose();
             }
         });
         JPanel panel = new JPanel(new GridLayout(3, 2));
@@ -67,7 +66,7 @@ public class BackGround extends JFrame implements KeyListener {
         enemyTimer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                container.moveDown(30);
+                container.moveDown(5);
                 container.killEnemies();
                 if (container.isGameOver()) {
                     stopGame();
