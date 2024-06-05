@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/game-state")
+@RequestMapping("/gamestate")
 public class GameStateController {
 
     @Autowired
