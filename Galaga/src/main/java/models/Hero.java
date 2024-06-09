@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import java.awt.*;
 
-@Service ("hero")
+
 public class Hero extends Role implements Drawable, MovableX {
     int[] XPoints = {400, 450, 350};
     int[] YPoints = {500, 550, 550};
 
-    @Value("Payer 1")
+
     private String name;
 
     private String password;
@@ -75,12 +75,17 @@ public class Hero extends Role implements Drawable, MovableX {
         g.fillPolygon(getCoordX(), getCoordY(), getCoordY().length);
     }
 
-    @Override
-    public void moveRigth(int distance) {
+
+    public void moveRight(int distance) {
         for (int i = 0; i < XPoints.length; i++) {
             XPoints[i] = XPoints[i] + distance;
             setCoordX(XPoints);
         }
+    }
+
+    @Override
+    public void moveRigth(int distance) {
+
     }
 
     @Override

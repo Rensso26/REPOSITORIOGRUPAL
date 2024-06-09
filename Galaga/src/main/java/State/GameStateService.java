@@ -17,7 +17,7 @@ public class GameStateService {
     private static final String BASE_URL = "http://localhost:8080/game-state";
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    // Método para guardar el estado del juego
+    // Método para guardar el estado del juego as
     public void saveGameState(GameState gameState) throws IOException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(BASE_URL);

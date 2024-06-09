@@ -1,6 +1,5 @@
 package State;
 
-
 public class GameState {
     private Long id;
     private String name;
@@ -8,7 +7,10 @@ public class GameState {
     private int life;
     private int points;
 
+
+
     // Getters y Setters
+
     public Long getId() {
         return id;
     }
@@ -45,8 +47,9 @@ public class GameState {
         return points;
     }
 
-
     public void setPoints(int points) {
         this.points = points;
     }
+
+
 }
