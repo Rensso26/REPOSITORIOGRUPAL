@@ -36,8 +36,8 @@ public class Container {
     // Instancia de GameManager para manejar el estado del juego
     private GameManager gameManager;
     LevelParameters[] levelParams = {
-            new LevelParameters(1, 5, 1, 5, 5, 0),   // Nivel 1
-            new LevelParameters(1, 15, 2, 10, 10, 0),  // Nivel 2
+            new LevelParameters(5, 5, 1, 5, 5, 0),   // Nivel 1
+            new LevelParameters(10, 15, 2, 10, 10, 0),  // Nivel 2
             new LevelParameters(1, 100, 3, 15, 15, 100)  // Nivel 3 con SuperEnemy
     };
 
@@ -47,9 +47,8 @@ public class Container {
         loadGameState(); // Cargar el estado del juego al iniciar
     }
 
-    public void InitialHero(String name, String password) {
+    public void InitialHero(String name) {
         hero.setName(name);
-        hero.setPassword(password);
     }
 
     private void initializeLevel1() {
@@ -248,7 +247,7 @@ public class Container {
         while (enemyBulletIterator.hasNext()) {
             Bullets bullet = enemyBulletIterator.next();
             if (bullet.getY() >= hero.getCoordY()[0] && bullet.getY() <= hero.getCoordY()[2]&&
-                    bullet.getX() >= hero.getCoordX()[2] && bullet.getX() <= hero.getCoordX()[1]) {
+                    bullet.getX() >= hero.getCoordX()[2] && bullet.getX() <= hero.getCoordX()[0]) {
                 enemyBulletIterator.remove();
                 hero.setLife(hero.getLife() - 5);
                 if (hero.getLife() <= 0) {

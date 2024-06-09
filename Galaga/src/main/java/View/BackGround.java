@@ -28,20 +28,18 @@ public class BackGround extends JFrame implements KeyListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JTextField name = new JTextField(20);
-        JTextField password = new JTextField(20);
         JButton botonIni = new JButton("Iniciar sesión");
 
         botonIni.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                container.InitialHero(name.getText(), password.getText());
+                container.InitialHero(name.getText());
                 new BackGround();
             }
         });
+
         JPanel panel = new JPanel(new GridLayout(3, 2));
         panel.add(new JLabel("Usuario:"));
         panel.add(name);
-        panel.add(new JLabel("Contraseña:"));
-        panel.add(password);
         panel.add(botonIni);
 
         getContentPane().add(panel);
@@ -63,10 +61,10 @@ public class BackGround extends JFrame implements KeyListener {
 
         addKeyListener(this);
 
-        enemyTimer = new Timer(100, new ActionListener() {
+        enemyTimer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                container.moveDown(5);
+                container.moveDown(3);
                 container.killEnemies();
                 container.damageSuperEnemi();
                 container.levelstarter();
@@ -106,7 +104,7 @@ public class BackGround extends JFrame implements KeyListener {
         });
         moveTimer.start();
 
-        enemyShootTimer = new Timer(1000, new ActionListener() {
+        enemyShootTimer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 container.enemyShoot();

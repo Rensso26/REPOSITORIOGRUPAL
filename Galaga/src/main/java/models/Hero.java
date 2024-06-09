@@ -17,7 +17,6 @@ public class Hero extends Role implements Drawable, MovableX {
 
     private String name;
 
-    private String password;
     private int life;
     private int score;
 
@@ -30,9 +29,8 @@ public class Hero extends Role implements Drawable, MovableX {
         this.score = 0;
     }
 
-    public Hero(String name, String password, int life, int score) {
+    public Hero(String name, int life, int score) {
         this.name = name;
-        this.password = password;
         this.life = life;
         this.score = score;
     }
@@ -61,13 +59,6 @@ public class Hero extends Role implements Drawable, MovableX {
         this.score = score;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public void draw(Graphics g) {
