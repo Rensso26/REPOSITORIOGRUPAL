@@ -29,6 +29,7 @@ public class Container {
     Random random = new Random();
 
     private int currentLevelIndex;
+    private Long currentGameStateId = 1L; // ID fijo para el estado del juego
     List<SuperEnemy> superEnemyList = new ArrayList<>();
 
     // Instancia de GameManager para manejar el estado del juego
@@ -245,16 +246,17 @@ public class Container {
 
     private void saveGameState() {
         GameState gameState = new GameState();
+        gameState.setId(currentGameStateId); // ID fijo
         gameState.setName(hero.getName());
         gameState.setLevel(currentLevelIndex);
         gameState.setLife(hero.getLife());
         gameState.setPoints(hero.getScore());
 
-        gameManager.saveCurrentGameState();
+        gameManager.saveCurrentGameState(gameState);
     }
 
     private void loadGameState() {
-        gameManager.loadGameStateById(1L); // Cargar el estado del juego con ID 1
+        gameManager.loadGameStateById(currentGameStateId); // Cargar el estado del juego con ID fijo
         GameState gameState = gameManager.getCurrentGameState();
 
         if (gameState != null) {
