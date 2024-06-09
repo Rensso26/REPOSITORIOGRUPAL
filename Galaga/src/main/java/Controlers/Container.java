@@ -29,6 +29,8 @@ public class Container {
     Random random = new Random();
 
     private int currentLevelIndex;
+    private Long currentGameStateId = 4L; // ID fijo para el estado del juego
+
     List<SuperEnemy> superEnemyList = new ArrayList<>();
 
     // Instancia de GameManager para manejar el estado del juego
@@ -89,6 +91,8 @@ public class Container {
                 initializeLevel3();
                 break;
             case 4:
+                resetGameState();
+                saveGameState();
                 stopGame();
                 break;
         }
@@ -211,6 +215,7 @@ public class Container {
                         iteratorS.remove();
                         hero.setScore(hero.getScore() + superEnemy.getRewild());
                         score.plus(hero.getScore());
+                        bullets.setDamage(5);
                     }
                     break;
                 }
@@ -225,6 +230,7 @@ public class Container {
             for (Bullets bullets : bulletsEnemyList) {
                     if (superEnemy.getLife() <= 0) {
                         iteratorS.remove();
+                        hero.setScore(hero.getScore()+superEnemy.getRewild());
                         score.plus(superEnemy.getRewild());
                     } else if (superEnemy.getLife() < 50) {
                         bullets.setDamage(5); // Deduce 5 puntos si la vida < 50
@@ -238,15 +244,18 @@ public class Container {
         }
     }
     public void killhero() {
-        LevelParameters params = levelParams[currentLevelIndex - 1]; // Obtener los parámetros del nivel actual
-
         Iterator<Bullets> enemyBulletIterator = bulletsEnemyList.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullets bullet = enemyBulletIterator.next();
-            if (bullet.getY() >= hero.getCoordY()[0] &&
+            if (bullet.getY() >= hero.getCoordY()[0] && bullet.getY() <= hero.getCoordY()[2]&&
                     bullet.getX() >= hero.getCoordX()[2] && bullet.getX() <= hero.getCoordX()[1]) {
                 enemyBulletIterator.remove();
-                hero.setLife(hero.getLife() - bullet.getDamage()); // Usar parámetro del nivel
+                hero.setLife(hero.getLife() - 5);
+                if (hero.getLife() <= 0) {
+                    resetGameState();
+                    saveGameState();
+                    stopGame();
+                }
             }
         }
     }
@@ -277,7 +286,12 @@ public class Container {
     private void stopGame() {
         String message = (hero.getLife() <= 0) ? "¡Has sido derrotado!" : "¡Has completado todos los niveles!";
         JOptionPane.showMessageDialog(null, message, "Juego terminado", JOptionPane.INFORMATION_MESSAGE);
-        saveGameState(); // Guardar el estado del juego al finalizar
+
+        // Resetear el estado del juego
+        resetGameState();
+
+        // Guardar el estado inicial del juego en la base de datos
+        saveGameState();
         System.exit(0);
     }
 
@@ -289,16 +303,17 @@ public class Container {
 
     private void saveGameState() {
         GameState gameState = new GameState();
+        gameState.setId(currentGameStateId); // ID fijo
         gameState.setName(hero.getName());
         gameState.setLevel(currentLevelIndex);
         gameState.setLife(hero.getLife());
         gameState.setPoints(hero.getScore());
 
-        gameManager.saveCurrentGameState();
+        gameManager.saveCurrentGameState(gameState);
     }
 
     private void loadGameState() {
-        gameManager.loadGameStateById(1L); // Cargar el estado del juego con ID 1
+        gameManager.loadGameStateById(currentGameStateId); // Cargar el estado del juego con ID fijo
         GameState gameState = gameManager.getCurrentGameState();
 
         if (gameState != null) {
@@ -308,5 +323,11 @@ public class Container {
             hero.setScore(gameState.getPoints());
             initializeNextLevel();
         }
+    }
+
+    private void resetGameState() {
+        hero.setLife(100);
+        hero.setScore(0);
+        currentLevelIndex = 1;
     }
 }
