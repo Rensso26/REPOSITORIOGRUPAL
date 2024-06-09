@@ -25,7 +25,7 @@ public class GameStateService {
     }
 
     public List<GameState> findAll() {
-        return entityManager.createQuery("from gamestate", GameState.class).getResultList();
+        return entityManager.createQuery("from GameState", GameState.class).getResultList();
     }
 
     public GameState findById(Long id) {

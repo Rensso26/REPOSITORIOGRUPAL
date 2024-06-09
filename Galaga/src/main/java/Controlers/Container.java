@@ -152,11 +152,14 @@ public class Container {
         }
     }
 
-    public void killEnemies() {
+    public void levelstarter(){
         if (enemyList.isEmpty() && superEnemyList.isEmpty() && currentLevelIndex <= 3) {
             currentLevelIndex += 1;
             initializeNextLevel();
         }
+    }
+
+    public void killEnemies() {
         Iterator<Enemy> iterator = enemyList.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -190,26 +193,19 @@ public class Container {
                 }
             }
         }
-        //AGREGADO
-        BulletCollisionsWithHero();
     }
-
-    //AGREGADO
-    public void BulletCollisionsWithHero() {
+    public void killhero(){
         Iterator<Bullets> enemyBulletIterator = bulletsEnemyList.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullets bullet = enemyBulletIterator.next();
-            if (bullet.getY() + 10 >= hero.getY() && bullet.getX() + 5 >= hero.getX() && bullet.getX() <= hero.getX() + hero.getWidth()) {
+            if (bullet.getY() >= hero.getCoordY()[0] &&
+                    bullet.getX() >= hero.getCoordX()[2] && bullet.getX() <=hero.getCoordX()[1] ) {
                 enemyBulletIterator.remove();
                 hero.setLife(hero.getLife() - 5);
-                if (hero.getLife() <= 0) {
-                    stopGame();
-                    return;
-
-                }
             }
         }
     }
+
 
     public void moveBullets() {
 
@@ -232,8 +228,6 @@ public class Container {
                 enemyBulletIterator.remove();
             }
         }
-        //AGREGADO
-        BulletCollisionsWithHero();
     }
 
 

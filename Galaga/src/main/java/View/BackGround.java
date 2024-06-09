@@ -68,6 +68,7 @@ public class BackGround extends JFrame implements KeyListener {
             public void actionPerformed(ActionEvent e) {
                 container.moveDown(5);
                 container.killEnemies();
+                container.levelstarter();
                 if (container.isGameOver()) {
                     stopGame();
                 }
@@ -81,6 +82,7 @@ public class BackGround extends JFrame implements KeyListener {
             public void actionPerformed(ActionEvent e) {
                 container.moveBullets();
                 gamePanel.repaint();
+                container.killhero();
             }
         });
         bulletTimer.start();
@@ -172,5 +174,7 @@ public class BackGround extends JFrame implements KeyListener {
         enemyTimer.stop();
         bulletTimer.stop();
         JOptionPane.showMessageDialog(this, "Game Over!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        System.exit(0);
     }
 }
