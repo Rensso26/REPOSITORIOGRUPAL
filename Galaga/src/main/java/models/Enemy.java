@@ -14,8 +14,8 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
 
     private int life;
     private int rewild;
-    private int damage;
-    public Enemy(int randomX, int randomY,int life, int rewild, int damage){
+
+    public Enemy(int randomX, int randomY,int life, int rewild){
         super(5);
         XPoints[0]=  randomX;
         XPoints[1]=  randomX + 40;
@@ -32,7 +32,7 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
         setCoordY(YPoints);
         this.life = life;
         this.rewild = rewild;
-        this.damage = damage;
+
     }
 
     public void repostEnemy(int randomX, int randomY){
@@ -65,9 +65,6 @@ public class Enemy extends Role implements Drawable, MovableY, Dieable {
         return rewild;
     }
 
-    public int getDamage() {
-        return damage;
-    }
 
 
     @Override

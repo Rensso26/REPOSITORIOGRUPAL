@@ -12,10 +12,12 @@ import java.awt.*;
 public class Bullets extends Role implements Drawable, MovableY {
     static int speed = 10;
     private Color color;
+    public int damage ;
     public Bullets(int startX, int startY, Color color) {
         setX(startX);
         setY(startY);
         this.color = color;
+        damage = 5;
     }
 
     @Override
@@ -34,7 +36,12 @@ public class Bullets extends Role implements Drawable, MovableY {
         setY(getY() + distance * speed);
     }
 
+    public int getDamage() {
+        return damage;
+    }
 
-
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }
 

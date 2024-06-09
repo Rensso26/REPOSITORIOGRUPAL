@@ -13,15 +13,9 @@ public class GameManager {
     }
 
     // Método para guardar el estado actual del juego
-    public void saveCurrentGameState(GameState gameState) {
+    public void saveCurrentGameState() {
         try {
-            if (gameState.getId() != null) {
-                // Si el ID no es nulo, actualiza el estado del juego existente
-                gameStateService.updateGameState(gameState.getId(), gameState);
-            } else {
-                // Si el ID es nulo, guarda un nuevo estado del juego
-                gameStateService.saveGameState(gameState);
-            }
+            gameStateService.saveGameState(currentGameState);
         } catch (IOException e) {
             e.printStackTrace();
         }
