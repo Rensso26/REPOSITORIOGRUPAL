@@ -18,9 +18,13 @@ public class Container {
     final int SCREEN_HEIGHT = 100;
     final int GAME_STATE_PANEL = 50;
     Hero hero = new Hero();
+    String name;
     Line line = new Line();
+    GameState gameState = new GameState();
     Life life;
     LifeSuperEnemy lifeSuperEnemy;
+
+
 
     Score score = new Score(hero.getScore());
     List<Enemy> enemyList = new ArrayList<>();
@@ -29,33 +33,41 @@ public class Container {
     Random random = new Random();
 
     private int currentLevelIndex;
-    private Long currentGameStateId = 4L; // ID fijo para el estado del juego
 
     List<SuperEnemy> superEnemyList = new ArrayList<>();
 
     // Instancia de GameManager para manejar el estado del juego
     private GameManager gameManager;
     LevelParameters[] levelParams = {
-            new LevelParameters(5, 5, 1, 5, 5, 0),   // Nivel 1
-            new LevelParameters(10, 15, 2, 10, 10, 0),  // Nivel 2
-            new LevelParameters(1, 100, 3, 15, 15, 100)  // Nivel 3 con SuperEnemy
+            new LevelParameters(5, 5, 1, 5,  0),   // Nivel 1
+            new LevelParameters(10, 15, 2, 10,  0),  // Nivel 2
+            new LevelParameters(1, 100, 3, 15,  100),  // Nivel 3 con SuperEnemy
+            new LevelParameters(1, 100, 3, 15,  100)
     };
 
     public Container() {
         this.currentLevelIndex = 0;
         this.gameManager = new GameManager(); // Inicializa GameManager
-        loadGameState(); // Cargar el estado del juego al iniciar
     }
 
     public void InitialHero(String name) {
+        this.name = name;
         hero.setName(name);
+        System.out.println(hero.getName());
+        loadGameState();
+    }
+
+    public void CreateHero(String name) {
+        this.name = name;
+        hero.setName(name);
+        saveGameState();
     }
 
     private void initializeLevel1() {
         LevelParameters params = levelParams[0];
         enemyList.clear();
         for (int i = 0; i < params.getNumEnemies(); i++) {
-            enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT - GAME_STATE_PANEL) + GAME_STATE_PANEL, params.getEnemyLife(),  5));
+            enemyList.add(new Enemy(random.nextInt(SCREEN_WIDTH), random.nextInt(SCREEN_HEIGHT - GAME_STATE_PANEL) + GAME_STATE_PANEL, params.getEnemyLife(), 5));
         }
     }
 
@@ -96,7 +108,6 @@ public class Container {
                 break;
         }
     }
-
     public void draw(Graphics g) {
         line.draw(g);
         hero.draw(g);
@@ -175,14 +186,12 @@ public class Container {
     public void levelstarter() {
         if (enemyList.isEmpty() && superEnemyList.isEmpty() && currentLevelIndex <= 3) {
             currentLevelIndex += 1;
+            saveGameState();
             initializeNextLevel();
-
-            saveGameState(); // Guardar el estado del juego al iniciar el siguiente nivel
         }
     }
-
     public void killEnemies() {
-        LevelParameters params = levelParams[currentLevelIndex - 1]; // Obtener los parámetros del nivel actual
+        LevelParameters params = levelParams[currentLevelIndex]; // Obtener los parámetros del nivel actual
         Iterator<Enemy> iterator = enemyList.iterator();
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
@@ -195,7 +204,6 @@ public class Container {
                         iterator.remove();
                         hero.setScore(hero.getScore() + enemy.getRewild());
                         score.plus(hero.getScore());
-                        hero.setLife(hero.getLife() + params.getHeroLifeBonus()); // Usar parámetro del nivel
                     }
                     break;
                 }
@@ -221,32 +229,32 @@ public class Container {
             }
         }
     }
-
-    public void damageSuperEnemi(){
+    public void damageSuperEnemi() {
         Iterator<SuperEnemy> iteratorS = superEnemyList.iterator();
         while (iteratorS.hasNext()) {
             SuperEnemy superEnemy = iteratorS.next();
             for (Bullets bullets : bulletsEnemyList) {
-                    if (superEnemy.getLife() <= 0) {
-                        iteratorS.remove();
-                        hero.setScore(hero.getScore()+superEnemy.getRewild());
-                        score.plus(superEnemy.getRewild());
-                    } else if (superEnemy.getLife() < 50) {
-                        bullets.setDamage(5); // Deduce 5 puntos si la vida < 50
-                    } else if (superEnemy.getLife() > 50 && superEnemy.getLife() < 75) {
-                        bullets.setDamage(10); // Deduce 10 puntos si la vida > 50 y < 75
-                    } else if (superEnemy.getLife() > 75) {
-                        bullets.setDamage(15); // Deduce 15 puntos si la vida > 75
-                    }
-                    break;
+                if (superEnemy.getLife() <= 0) {
+                    iteratorS.remove();
+                    hero.setScore(hero.getScore() + superEnemy.getRewild());
+                    score.plus(superEnemy.getRewild());
+                } else if (superEnemy.getLife() < 50) {
+                    bullets.setDamage(5); // Deduce 5 puntos si la vida < 50
+                } else if (superEnemy.getLife() > 50 && superEnemy.getLife() < 75) {
+                    bullets.setDamage(10); // Deduce 10 puntos si la vida > 50 y < 75
+                } else if (superEnemy.getLife() > 75) {
+                    bullets.setDamage(15); // Deduce 15 puntos si la vida > 75
+                }
+                break;
             }
         }
     }
+
     public void killhero() {
         Iterator<Bullets> enemyBulletIterator = bulletsEnemyList.iterator();
         while (enemyBulletIterator.hasNext()) {
             Bullets bullet = enemyBulletIterator.next();
-            if (bullet.getY() >= hero.getCoordY()[0] && bullet.getY() <= hero.getCoordY()[2]&&
+            if (bullet.getY() >= hero.getCoordY()[0] && bullet.getY() <= hero.getCoordY()[2] &&
                     bullet.getX() >= hero.getCoordX()[2] && bullet.getX() <= hero.getCoordX()[0]) {
                 enemyBulletIterator.remove();
                 hero.setLife(hero.getLife() - 5);
@@ -281,7 +289,6 @@ public class Container {
     }
 
 
-
     private void stopGame() {
         String message = (hero.getLife() <= 0) ? "¡Has sido derrotado!" : "¡Has completado todos los niveles!";
         JOptionPane.showMessageDialog(null, message, "Juego terminado", JOptionPane.INFORMATION_MESSAGE);
@@ -300,30 +307,24 @@ public class Container {
 
     // Métodos para guardar y cargar el estado del juego
 
-    private void saveGameState() {
-        GameState gameState = new GameState();
-        gameState.setId(currentGameStateId); // ID fijo
+    public void saveGameState() {
         gameState.setName(hero.getName());
         gameState.setLevel(currentLevelIndex);
         gameState.setLife(hero.getLife());
         gameState.setPoints(hero.getScore());
-
         gameManager.saveCurrentGameState(gameState);
     }
 
     private void loadGameState() {
-        gameManager.loadGameStateById(currentGameStateId); // Cargar el estado del juego con ID fijo
+        gameManager.loadGameStateByName(hero.getName());
         GameState gameState = gameManager.getCurrentGameState();
 
-        if (gameState != null) {
-            hero.setName(gameState.getName());
             currentLevelIndex = gameState.getLevel();
             hero.setLife(gameState.getLife());
             hero.setScore(gameState.getPoints());
             initializeNextLevel();
-        }
-    }
 
+    }
     private void resetGameState() {
         hero.setLife(100);
         hero.setScore(0);

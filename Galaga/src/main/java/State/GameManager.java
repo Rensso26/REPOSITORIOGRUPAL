@@ -27,14 +27,9 @@ public class GameManager {
         }
     }
 
+
+
     // Método para cargar el estado del juego por ID
-    public void loadGameStateById(Long id) {
-        try {
-            currentGameState = gameStateService.getGameStateById(id);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     // Método para actualizar el estado actual del juego
     public void updateCurrentGameState() {
@@ -53,6 +48,26 @@ public class GameManager {
             e.printStackTrace();
         }
     }
+
+    public void loadGameStateByName(String name) {
+        try {
+            currentGameState = gameStateService.getGameStateByName(name);
+        } catch (IOException e) {
+            e.printStackTrace(); // Consider using a logger instead of printStackTrace for better logging practices
+        } catch (RuntimeException e) {
+            e.printStackTrace(); // Handle the runtime exceptions if necessary
+        }
+    }
+
+
+    public void loadGameStateById(Long id) {
+            try {
+                currentGameState = gameStateService.getGameStateById(id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
 
     // Getters y Setters para el estado actual del juego
     public GameState getCurrentGameState() {

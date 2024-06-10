@@ -15,10 +15,9 @@ public class Hero extends Role implements Drawable, MovableX {
     int[] YPoints = {500, 550, 550};
 
 
-    private String name;
-
-    private int life;
-    private int score;
+    public String name;
+    public int life;
+    public int score;
 
 
     public Hero() {
@@ -96,12 +95,6 @@ public class Hero extends Role implements Drawable, MovableX {
     public int getY() {
         return YPoints[0]; // Retorna la coordenada Y del vértice superior
     }
-
-    // Método para reducir la vida del héroe cuando recibe daño
-    public void reduceLife(int damage) {
-        life -= damage;
-    }
-
 
 
 }

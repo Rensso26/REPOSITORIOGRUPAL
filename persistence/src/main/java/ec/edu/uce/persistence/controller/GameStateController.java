@@ -19,9 +19,9 @@ public class GameStateController {
         return service.save(gameState);
     }
 
-    @GetMapping
-    public List<GameState> findAll() {
-        return service.findAll();
+    @GetMapping("/name/{name}")
+    public GameState findByName(@PathVariable String name) {
+        return service.findByName(name);
     }
 
     @GetMapping("/{id}")
@@ -32,6 +32,10 @@ public class GameStateController {
     @PutMapping("/{id}")
     public GameState update(@PathVariable Long id, @RequestBody GameState gameState) {
         return service.update(id, gameState);
+    }
+    @PutMapping("/name/{name}")
+    public GameState updateByName(@PathVariable String name, @RequestBody GameState gameState) {
+        return service.update(name, gameState);
     }
 
     @DeleteMapping("/{id}")

@@ -44,6 +44,21 @@ public class GameStateService {
             }
         }
     }
+    public GameState getGameStateByName(String name) throws IOException {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(BASE_URL + "/name/" + name);
+            try (CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getCode();
+                if (statusCode != 200) {
+                    throw new IOException("Unexpected status code: " + statusCode);
+                }
+                String responseBody = EntityUtils.toString(response.getEntity());
+                return objectMapper.readValue(responseBody, GameState.class);
+            } catch (ParseException e) {
+                throw new RuntimeException("Error parsing the response", e);
+            }
+        }
+    }
 
     // Método para actualizar el estado del juego
     public void updateGameState(Long id, GameState gameState) throws IOException {
@@ -60,6 +75,7 @@ public class GameStateService {
         }
     }
 
+
     // Método para eliminar el estado del juego
     public void deleteGameState(Long id) throws IOException {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
@@ -69,4 +85,6 @@ public class GameStateService {
             }
         }
     }
+
+
 }

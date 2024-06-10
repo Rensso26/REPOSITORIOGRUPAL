@@ -23,31 +23,10 @@ public class BackGround extends JFrame implements KeyListener {
     GamePanel gamePanel = new GamePanel(container);
 
 
-    public BackGround(boolean inizialization){
-        setTitle("Inisio de sesio");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    public BackGround(String name) {
 
-        JTextField name = new JTextField(20);
-        JButton botonIni = new JButton("Iniciar sesión");
 
-        botonIni.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                container.InitialHero(name.getText());
-                new BackGround();
-            }
-        });
-
-        JPanel panel = new JPanel(new GridLayout(3, 2));
-        panel.add(new JLabel("Usuario:"));
-        panel.add(name);
-        panel.add(botonIni);
-
-        getContentPane().add(panel);
-        pack();
-        setLocationRelativeTo(null); // Centra la ventana en la pantalla
-        setVisible(true);
-    }
-    public BackGround() {
+        container.InitialHero(name);
 
         setTitle("Galaga");
         setSize(800,SCREEN_HEIGHT);
