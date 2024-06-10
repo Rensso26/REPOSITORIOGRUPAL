@@ -1,7 +1,7 @@
 Colaboradores:
 Rensso Nicolay Parra Vasquez
-Joel Joshua Luna Grijalva 
-Freddy Xavier Tapia Rea
+,Joel Joshua Luna Grijalva 
+,Freddy Xavier Tapia Rea
 
 # Proyecto grupal Galaga 
 
